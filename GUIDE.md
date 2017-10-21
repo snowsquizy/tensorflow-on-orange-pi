@@ -1,22 +1,22 @@
-# Building TensorFlow for Raspberry Pi: a Step-By-Step Guide
+# Building TensorFlow for Orange Pi PC Plus: a Step-By-Step Guide
 
 _[Back to readme](README.md)_
 
 ## What You Need
 
-* Raspberry Pi 2 or 3 Model B
-* An SD card running Raspbian with several GB of free space
-	* An 8 GB card with a fresh install of Raspbian **does not** have enough space. A 16 GB SD card minimum is recommended.
-	* These instructions may work on Linux distributions other than Raspbian
-* Internet connection to the Raspberry Pi
+* Orange Pi PC Plus (H3) however most Orange Pi SBC should work
+* An SD card running Armbian
+	* An 8 GB card with a fresh install of Armbian **does not** have enough space. A 16 GB SD card minimum is recommended.
+	* These instructions may work on Linux distributions other than Armbian
+* Internet connection to the Orange Pi
 * A USB memory drive that can be installed as swap memory (if it is a flash drive, make sure you don't care about the drive). Anything over 1 GB should be fine
 * A fair amount of time
 
 ## Overview
 
-These instructions were crafted for a [Raspberry Pi 3 Model B](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/) running a vanilla copy of Raspbian 8.0 (jessie). It appears to work on Raspberry Pi 2, but [there are some kinks that are being worked out](https://github.com/tensorflow/tensorflow/issues/445#issuecomment-196021885). If these instructions work for different distributions, let me know!
+These instructions were crafted from instructions for a [Raspberry Pi 3 Model B](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/) running a vanilla copy of Raspbian 8.0 (jessie).  If these instructions work for different distributions, let me know!
 
-Here's the basic plan: build a RPi-friendly version of [Bazel](https://github.com/bazelbuild/bazel) and use it to build TensorFlow.
+Here's the basic plan: build a OPi-friendly version of [Bazel](https://github.com/bazelbuild/bazel) and use it to build TensorFlow.
 
 ### Contents
 
@@ -48,13 +48,19 @@ sudo apt-get install pkg-config zip g++ zlib1g-dev unzip
 For TensorFlow:
 
 ```
-# For Python 2.7
-sudo apt-get install python-pip python-numpy swig python-dev
-sudo pip install wheel
-
-# For Python 3.3+
+# Python 3.3+
 sudo apt-get install python3-pip python3-numpy swig python3-dev
 sudo pip3 install wheel
+```
+
+For Installing Oracle Java 1.8
+```shell
+sudo add-apt-repository ppa:webupd8team/java
+sudo nano /etc/apt/source.list.d/webupd8team-java-jessie.list
+```
+replace 'jessie' with 'xenial' then save and exit
+```
+sudo apt-get update && sudo apt-get install oracle-java8-installer
 ```
 
 To be able to take advantage of certain optimization flags:
@@ -74,7 +80,7 @@ cd tf
 
 ### 2. Install a Memory Drive as Swap for Compiling
 
-In order to succesfully build TensorFlow, your Raspberry Pi needs a little bit more memory to fall back on. Fortunately, this process is pretty straightforward. Grab a USB storage drive that has at least 1GB of memory. I used a flash drive I could live without that carried no important data. That said, we're only going to be using the drive as swap while we compile, so this process shouldn't do too much damage to a relatively new USB drive.
+In order to succesfully build TensorFlow, your Orange Pi needs a little bit more memory to fall back on. Fortunately, this process is pretty straightforward. Grab a USB storage drive that has at least 1GB of memory. I used a flash drive I could live without that carried no important data. That said, we're only going to be using the drive as swap while we compile, so this process shouldn't do too much damage to a relatively new USB drive.
 
 First, put insert your USB drive, and find the `/dev/XXX` path for the device.
 
@@ -269,7 +275,7 @@ Now, scroll down toward the bottom and delete the following line containing `#de
 #define IS_MOBILE_PLATFORM   <----- DELETE THIS LINE
 ```
 
-This keeps our Raspberry Pi device (which has an ARM CPU) from being recognized as a mobile device.
+This keeps our Orange Pi device (which has an ARM CPU) from being recognized as a mobile device.
 
 Finally, we have to adjust the protocol to access the Numeric JS library- for some reason the Cloudflare security certificates don't work properly over `https`. We'll need to fix this in the Bazel `WORKSPACE` file:
 
@@ -312,7 +318,7 @@ Now we can use it to build TensorFlow! **Warning: This takes a really, really lo
 bazel build -c opt --copt="-mfpu=neon-vfpv4" --copt="-funsafe-math-optimizations" --copt="-ftree-vectorize" --copt="-fomit-frame-pointer" --local_resources 1024,1.0,1.0 --verbose_failures tensorflow/tools/pip_package:build_pip_package
 ```
 
-_Note: I toyed around with telling Bazel to use all four cores in the Raspberry Pi, but that seemed to make compiling more prone to completely locking up. This process takes a long time regardless, so I'm sticking with the more reliable options here. If you want to be bold, try using `--local_resources 1024,2.0,1.0` or `--local_resources 1024,4.0,1.0`_
+_Note: I toyed around with telling Bazel to use all four cores in the Orange Pi, but that seemed to make compiling more prone to completely locking up. This process takes a long time regardless, so I'm sticking with the more reliable options here. If you want to be bold, try using `--local_resources 1024,2.0,1.0` or `--local_resources 1024,4.0,1.0`_
 
 When you wake up the next morning and it's finished compiling, you're in the home stretch! Use the built binary file to create a Python wheel.
 
@@ -342,7 +348,7 @@ Finally, remove the line you wrote in `/etc/fstab` referencing the device
 sudo nano /etc/fstab
 ```
 
-Then reboot your Raspberry Pi.
+Then reboot your Orange Pi.
 
 **And you're done!** You deserve a break.
 
@@ -354,4 +360,4 @@ Then reboot your Raspberry Pi.
 
 ---
 
-_[Back to top](#building-tensorflow-for-raspberry-pi-a-step-by-step-guide)_
+_[Back to top](# Building TensorFlow for Orange Pi PC Plus: a Step-By-Step Guide)_
