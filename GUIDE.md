@@ -235,7 +235,7 @@ cd tensorflow
 Only current working with Tensorflow R1.0 so lets check out that version
 
 ```shell
-git checkout r1.0
+git checkout r1.1
 ```
 
 Once in the directory, we have to write a nifty one-liner that is incredibly important. The next line goes through all files and changes references of 64-bit program implementations (which we don't have access to) to 32-bit implementations. Neat!
