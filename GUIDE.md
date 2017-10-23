@@ -31,42 +31,23 @@ Here's the basic plan: build a OPi-friendly version of [Bazel](https://github.co
 
 ### 1. Install basic dependencies
 
-First, update apt-get to make sure it knows where to download everything.
-
-```shell
-sudo apt-get update
-```
-
-Next, install some base dependencies and tools we'll need later.
-
-For Bazel:
-
-```shell
-sudo apt-get install pkg-config zip g++ zlib1g-dev unzip
-```
-
-For TensorFlow:
-
-```
-# Python 3.3+
-sudo apt-get install python3-pip python3-numpy swig python3-dev
-sudo pip3 install wheel
-```
-
-For Installing Oracle Java 1.8
+For Installing Oracle Java 1.8 we need to add a PPA repository
 ```shell
 sudo add-apt-repository ppa:webupd8team/java
 sudo nano /etc/apt/source.list.d/webupd8team-java-jessie.list
 ```
-replace 'jessie' with 'xenial' then save and exit
-```
-sudo apt-get update && sudo apt-get install oracle-java8-installer
+Replace 'jessie' with 'xenial' then save and exit.
+
+Now update and install all the required Software
+```shell
+sudo apt-get update
+sudo apt-get install pkg-config zip g++ zlib1g-dev unzip python3-pip python3-numpy swig python3-dev oracle-java8-installer gcc-4.8 g++-4.8
+sudo pip3 install wheel
 ```
 
 To be able to take advantage of certain optimization flags:
 
 ```
-sudo apt-get install gcc-4.8 g++-4.8
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 100
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 100
 ```
