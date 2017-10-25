@@ -117,12 +117,18 @@ If you get an error claiming it can't find your UUID, go back and edit `/etc/fst
 sudo nano /etc/fstab
 ```
 
+Replace the UUID with /dev/XXX
+
 ```bash
-# Replace the UUID with /dev/XXX
 /dev/XXX none swap sw,pri=5 0 0
 ```
 
-Alright! You've got swap! Don't throw out the `/dev/XXX` information yet- you'll need it to remove the device safely later on.
+Alright! You've got swap! Don't throw out the `/dev/XXX` information yet- you'll need it to remove the device safely later on.  Reboot the system
+
+```bash
+sudo reboot
+```
+
 
 ### 3. Build Bazel
 
