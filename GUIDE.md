@@ -29,7 +29,7 @@ Here's the basic plan: build a OPi-friendly version of [Bazel](https://github.co
 
 ## The Build
 
-### 1. Install basic dependencies
+### 1. Install Dependencies
 
 For Installing Oracle Java 1.8 we need to add a PPA repository
 ```shell
@@ -88,7 +88,7 @@ If the previous command outputted an alphanumeric UUID, copy that now. Otherwise
 sudo blkid
 ```
 
-Now edit your `/etc/fstab` file to register your swap file. (I'm a Vim guy, but Nano is installed by default)
+Now edit your `/etc/fstab` file to register your swap file and increase the size of your tmpfs
 
 ```shell
 sudo nano /etc/fstab
@@ -98,6 +98,11 @@ On a separate line, enter the following information. Replace the X's with the UU
 
 ```bash
 UUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX none swap sw,pri=5 0 0
+```
+
+Add the following to the end of the tmpfs line
+```bash
+defaults,nosuid,size=4G 0 0
 ```
 
 Save `/etc/fstab`, exit your text editor, and run the following command:
