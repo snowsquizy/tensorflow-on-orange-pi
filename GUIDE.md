@@ -34,7 +34,7 @@ Here's the basic plan: build a OPi-friendly version of [Bazel](https://github.co
 For Installing Oracle Java 1.8 we need to add a PPA repository
 ```shell
 sudo add-apt-repository ppa:webupd8team/java
-sudo nano /etc/apt/source.list.d/webupd8team-java-jessie.list
+sudo nano /etc/apt/sources.list.d/webupd8team-java-jessie.list
 ```
 Replace 'jessie' with 'xenial' then save and exit.
 
