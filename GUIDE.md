@@ -41,8 +41,7 @@ Replace 'jessie' with 'xenial' then save and exit.
 Now update and install all the required Software
 ```shell
 sudo apt-get update
-sudo apt-get install pkg-config zip g++ zlib1g-dev unzip python3-pip python3-numpy swig python3-dev oracle-java8-installer gcc-4.8 g++-4.8
-sudo pip3 install wheel
+sudo apt-get install pkg-config zip g++ zlib1g-dev unzip python3-pip python3-numpy swig python3-dev oracle-java8-installer gcc-4.8 g++-4.8 build-essential oracle-java8-set-default python3-wheel
 ```
 
 To be able to take advantage of certain optimization flags:
