@@ -126,6 +126,7 @@ To build [Bazel](https://github.com/bazelbuild/bazel), we're going to need to do
 ```shell
 wget https://github.com/bazelbuild/bazel/releases/download/0.4.5/bazel-0.4.5-dist.zip
 unzip -d bazel bazel-0.4.5-dist.zip
+sudo chmod -R 777 bazel/
 ```
 
 Once it's done downloading and extracting, we can move into the directory to make a few changes:
